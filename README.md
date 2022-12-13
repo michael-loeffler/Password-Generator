@@ -29,9 +29,15 @@ This application allows the user to generate a password when they click the butt
 
 Link to deployed application:
 
-    https://michael-loeffler.github.io/Professional-Portfolio/
+    https://michael-loeffler.github.io/Password-Generator/
 
-![Preview of Application and demonstration of features](./assets/images/portfolioDemo.gif)
+![Preview of Application and demonstration of features](./assets/images/passwordGeneratorDemo.gif)
+
+![Preview of Character Length Window Prompt](./assets/images/lengthFailPre.PNG)
+
+![Preview of Character Length Fail Window Alert](./assets/images/lengthFailPost.PNG)
+
+![Preview of all four Window Confirm Messages and Fail Window Alert](./assets/images/characterTypeFail.PNG)
 
 ## Credits
 OWASP List of Special Characters for Passwords
