@@ -1,12 +1,15 @@
+// Glocal Declaration //
+var password = "";
 // GENERATE PASSWORD FUNCTION //
 function generatePassword() {
-  // This section creates all window prompts/confirms for the user to select desired criteria for their password. User input validation is performed and window alerts will appear the user's input does not meet certain conditions. When window alerts appear, the generatePassword function is re-runs so that they can input data that meets the required conditions. //
+  // This section creates all window prompts/confirms for the user to select desired criteria for their password. User input validation is performed and window alerts will appear the user's input does not meet certain conditions. When window alerts appear, the generatePassword function is re-run so that the user can input data that meet the required conditions. //
   var length = window.prompt("How many characters would you like your password to be?"); // Stores the user's desired characters in variable "length" //
   if (!length) {
     return;
   } else if (length < 8 || length > 128) {
     window.alert("Please enter a character-length between 8 and 128.");
     generatePassword();
+    return;
   }
   var lowerCase = window.confirm("Would you like your password to include lowercase characters?");
   var upperCase = window.confirm("Would you like your password to include uppercase characters?");
@@ -16,6 +19,7 @@ function generatePassword() {
   if (!lowerCase && !upperCase && !numeric && !special) {
     window.alert("You must select at least one character type in order to generate a password.");
     generatePassword();
+    return;
   }
   // Character String Declarations //
   var lowerCaseCharacters = "abcdefghijklmnopqrstuvwxyz";
@@ -30,41 +34,38 @@ function generatePassword() {
   // Utilizes boolean user input variables to create a new array "allSelectedTypes" containing the character arrays that the user would like included in their generated password. "allSelectedTypes" is an array of arrays. //
   var allSelectedTypes = [];
   for (i = 0; i < 4; i++) {
-  if (lowerCase) {
-    allSelectedTypes[i] = lowerCaseArray;
-    lowerCase = false; // resets the user input to false if it was previously true so that this action is not repeated when the loop runs again. //
-  } else if (upperCase) {
-    allSelectedTypes[i] = upperCaseArray;
-    upperCase = false;
-  } else if (numeric) {
-    allSelectedTypes[i] = numericArray;
-    numeric = false;
-  } else if (special) {
-    allSelectedTypes[i] = specialArray;
-    special = false;
-  }
+    if (lowerCase) {
+      allSelectedTypes[i] = lowerCaseArray;
+      lowerCase = false; // resets the user input to false if it was previously true so that this action is not repeated when the loop runs again. //
+    } else if (upperCase) {
+      allSelectedTypes[i] = upperCaseArray;
+      upperCase = false;
+    } else if (numeric) {
+      allSelectedTypes[i] = numericArray;
+      numeric = false;
+    } else if (special) {
+      allSelectedTypes[i] = specialArray;
+      special = false;
+    }
   }
   // Loop that assembles the new password one character at a time (up until the character length input by the user), by first selecting a random array within the "allSelectedTypes" array (stored in "arrayIndex"), then by selecting a random character in that array (stored in "characterIndex"). Because "allSelectedTypes" is an array of arrays, each new character to be added to the generated password is called using both indices ("arrayIndex" and "characterIndex"). //
-  var password = "";
   for (i = 0; i < length; i++) {
     var arrayIndex = Math.floor(Math.random() * allSelectedTypes.length);
     var characterIndex = Math.floor(Math.random() * allSelectedTypes[arrayIndex].length);
     password += allSelectedTypes[arrayIndex][characterIndex];
   }
-  return(password);
+  return;
 }
 
 // Displays password to the #password text area //
 function writePassword(event) {
   event.preventDefault();
-  var password = ""
-  password = generatePassword();
+  password = "" // Resets the password to an empty string each time before generatePassword is run so that the screen only displays the newest password, not concatenating onto any old ones //
+  generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
 
 }
-
 // Adds event listener to generate button that will run writePassword function when the "Generate Password" button is clicked //
 var generateBtn = document.querySelector("#generate");
 generateBtn.addEventListener("click", writePassword);
